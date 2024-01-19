@@ -35,3 +35,12 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### application yml ###
+**/application.yml
+
+### 로그 파일 ###
+logs
+
+### env ###
+.env
