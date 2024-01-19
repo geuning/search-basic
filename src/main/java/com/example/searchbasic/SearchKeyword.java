@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "`search_keyword`")
+@Table(name = "`search_keyword`", indexes = {@Index(name = "keyword", columnList = "keyword")})
 public class SearchKeyword {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
