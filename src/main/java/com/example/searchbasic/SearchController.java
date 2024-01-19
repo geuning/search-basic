@@ -1,6 +1,8 @@
 package com.example.searchbasic;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -12,8 +14,9 @@ public class SearchController {
     }
 
     @PostMapping("/search")
-    public SearchKeywordDto search(String keyword) {
-        return searchService.save(keyword);
+    public ResponseEntity<SearchKeywordDto> search(@RequestBody SearchKeywordReqDto request) {
+        String keyword = request.getKeyword();
+        return ResponseEntity.ok(searchService.save(keyword));
     }
 
 }
