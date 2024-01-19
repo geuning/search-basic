@@ -2,6 +2,7 @@ package com.example.searchbasic;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "`search_keyword`")
 public class SearchKeyword {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long keywordId;
+
     private String keyword;
 
     private Long searchCnt;
@@ -18,10 +22,19 @@ public class SearchKeyword {
     @Version
     private long version;
 
-    public SearchKeyword(String keyword, Long searchCnt) {
+    @Builder
+    public SearchKeyword(Long keywordId, String keyword, Long searchCnt) {
+        this.keywordId = keywordId;
         this.keyword = keyword;
         this.searchCnt = searchCnt;
     }
+    public static SearchKeyword create(String keyword) {
+        return SearchKeyword.builder()
+                .keyword(keyword)
+                .searchCnt(1L)
+                .build();
+    }
+
 
     public void increaseSearchCnt() {
         searchCnt += 1;

@@ -3,6 +3,8 @@ package com.example.searchbasic;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class SearchService {
     private final SearchKeywordRepository searchKeywordRepository;
@@ -13,8 +15,15 @@ public class SearchService {
 
     @Transactional
     public SearchKeywordDto save(String keyword) {
-        SearchKeyword searchKeyword = searchKeywordRepository.findById(keyword).orElse(new SearchKeyword(keyword, 0L));
+        Optional<SearchKeyword> optionalSearchKeyword = searchKeywordRepository.findByKeyword(keyword);
+
+        if(optionalSearchKeyword.isEmpty()){
+            SearchKeyword searchKeyword = SearchKeyword.create(keyword);
+            return new SearchKeywordDto(searchKeywordRepository.save(searchKeyword));
+        }
+
+        SearchKeyword searchKeyword = optionalSearchKeyword.get();
         searchKeyword.increaseSearchCnt();
-        return new SearchKeywordDto(searchKeywordRepository.save(searchKeyword));
+        return new SearchKeywordDto(searchKeyword);
     }
 }
