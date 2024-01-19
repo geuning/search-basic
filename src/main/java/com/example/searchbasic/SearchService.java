@@ -1,5 +1,7 @@
 package com.example.searchbasic;
 
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +16,7 @@ public class SearchService {
     }
 
     @Transactional
+    @CachePut(value = "keyword", key = "#keyword")
     public SearchKeywordDto save(String keyword) {
         Optional<SearchKeyword> optionalSearchKeyword = searchKeywordRepository.findByKeyword(keyword);
 

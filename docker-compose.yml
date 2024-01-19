@@ -25,7 +25,7 @@ services:
       - hhplus-net
 
   application:
-    container_name: hhplus-basic-spring-index
+    container_name: hhplus-basic-spring-cache
     restart: on-failure
     env_file:
       - .env
